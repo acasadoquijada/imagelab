@@ -25,11 +25,7 @@ import imagelab.ImageLab;
  */
 public final class Run {
      /**
-     * Private constructor to avoid the "Utility classes should not have a
-     * public or default constructor." warning as indicated in this
-     * stackoverflow post:
-     * https://stackoverflow.com/questions/7766277/why-am-i-getting-this
-     * -warning-about-utility-classes-in-java/7768378#7768378.
+     * Private constructor to avoid instantiations.
      */
     private Run() { }
     /**
