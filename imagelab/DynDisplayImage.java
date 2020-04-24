@@ -1,8 +1,6 @@
 package imagelab;
 
-import java.awt.*;
-import java.awt.image.*;
-import javax.swing.*;
+import java.awt.Image;
 
 /**
  * Graphics frame used for dynamic display of an image.
@@ -16,22 +14,24 @@ public class DynDisplayImage extends DisplayImage   {
     private static final long serialVersionUID = 11L;
 
     /** Image for this frame. */
-    Image img;
+    private Image img;
     /** Display panel for this frame. */
     private DynaPanel pane;
     /** Singleton object. */
     private DynDisplayImage singleton;
-    
+    /** Value used to sleep the thread. */
+    public static final int SLEEP_PERIOD = 50;
+
     /**
      * This constructor takes the image object to display
      * and a string to use as the title of the window.
      * @param imp the image object to display
      * @param title the window title
      */
-    public DynDisplayImage(ImgProvider imp, String title) {
+    public DynDisplayImage(final ImgProvider imp, final String title) {
         super(imp, title);
     }
-    
+
     /**
      * This constructor takes the image object to display,
      * a string to use as the title of the window, and a
@@ -41,7 +41,8 @@ public class DynDisplayImage extends DisplayImage   {
      * @param title the window title
      * @param slow if present, indicates slow display
      */
-    public DynDisplayImage(ImgProvider imp, String title, boolean slow) {
+    public DynDisplayImage(
+        final ImgProvider imp, final String title, final boolean slow) {
         super(imp, title, slow);
     }
 
@@ -51,37 +52,39 @@ public class DynDisplayImage extends DisplayImage   {
      */
     public DynDisplayImage getDynDisplay() {
         if (singleton == null) {
-            singleton = new DynDisplayImage((ImgProvider)null, "DynDisplayImage");
-        };
+            singleton =
+            new DynDisplayImage((ImgProvider) null, "DynDisplayImage");
+         }
         return singleton;
     }
-    
+
     /**
      * Change the displayed image in this object.
      * @param imp the image object to display
+     * @param title the image title
      */
-    public void changeImage(ImgProvider imp, String title) {
+    public void changeImage(final ImgProvider imp, final String title) {
         setTitle(title);
-        improvider  = imp;
+        setImgProvider(imp);
         img         = imp.getImage();
         pane        = new DynaPanel(imp);
-        getContentPane().add(pane,"Center");
+        getContentPane().add(pane, "Center");
         int width;
         int height;
         while (-1 == (width = img.getWidth(null))) {
             //System.out.println("DynDisplayImage:constructor - first while");
             try {
-                    Thread.sleep(50);
-                } catch (Exception e){}
-        }
-    
+                Thread.sleep(SLEEP_PERIOD);
+                } catch (Exception e) { }
+            }
+
         while (-1 == (height = img.getHeight(null))) {
             //System.out.println("DynDisplayImage:constructor - second while");
             try {
-                    Thread.sleep(50);
-                } catch (Exception e){}
-        }
-        setBounds(0,0,width,height+TITLE_HEIGHT);
+                Thread.sleep(SLEEP_PERIOD);
+                } catch (Exception e) { }
+            }
+        setBounds(0, 0, width, height + TITLE_HEIGHT);
         repaint();
         setVisible(true);
     }

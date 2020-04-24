@@ -12,7 +12,7 @@ public abstract class ILFrame extends JFrame {
     /** Serialization version. */
     private static final long serialVersionUID = 11L;
     /** Image provider that activated this frame. */
-    protected ImgProvider improvider;
+    private ImgProvider improvider;
     /** Vertical space needed for frame title. */
     public static final int TITLE_HEIGHT = 40;
     /** Vertical space needed for menu bar. */
@@ -30,5 +30,12 @@ public abstract class ILFrame extends JFrame {
     /** Called when this window is closed. */
     public void byebye() {
         improvider.setInactive();
+    }
+
+    /** Set the ImgProvider object.
+     * @param imgProvider ImgProvider object
+     */
+    public void setImgProvider(final ImgProvider imgProvider) {
+        improvider = imgProvider;
     }
 }

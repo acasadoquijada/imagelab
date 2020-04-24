@@ -1,10 +1,10 @@
 package imagelab;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Iterator;
+import javax.swing.JPanel;
+import java.awt.Image;
+
+import java.awt.Graphics;
+import java.awt.Color;
 
 /**
  * DynaPanel is a class to allow for dynamically displaying images.
@@ -20,27 +20,31 @@ public class DynaPanel extends JPanel implements ILPanel {
     /** Default height of the title text. */
     public static final int TITLE_HEIGHT = 40;
     /** Default background color. */
-    public static final Color FRAME_BG_COLOR = new Color(255,0,0,0);
-    
+    public static final Color FRAME_BG_COLOR = new Color(255, 0, 0, 0);
+
     /** Singleton object. */
     private static DynaPanel dynPanSingleton;
 
     /**
      * Factory method to get the canvas singleton object.
+     * @return the canvas singleton object
      */
     public static DynaPanel getDynPan() {
-        if(dynPanSingleton == null) {
-            dynPanSingleton = new DynaPanel((Image)null);
+        if (dynPanSingleton == null) {
+            dynPanSingleton = new DynaPanel((Image) null);
         }
         dynPanSingleton.setVisible(true);
         return dynPanSingleton;
     }
 
     // Instance Variables
+    /** Background color object. */
     private Color backgroundColour;
+    /** Image object representing the panelImage. */
     private Image panelImage;
+    /** Graphics object. */
     private Graphics graphic;
-    
+
     /**
      * Create a default DynaPanel.
      */
@@ -54,7 +58,7 @@ public class DynaPanel extends JPanel implements ILPanel {
      * Create a DynaPanel.
      * @param img image to be displayed
      */
-    public DynaPanel(Image img) {
+    public DynaPanel(final Image img) {
         super(true);
         panelImage = img;
         System.out.println("DynaPanel: panelImage = " + panelImage);
@@ -64,7 +68,7 @@ public class DynaPanel extends JPanel implements ILPanel {
      * Create a DynaPanel.
      * @param imp image to be displayed
      */
-    public DynaPanel(ImgProvider imp) {
+    public DynaPanel(final ImgProvider imp) {
         super(true);
         int width  = imp.getWidth();
         int height = imp.getHeight();
@@ -76,40 +80,40 @@ public class DynaPanel extends JPanel implements ILPanel {
      * Draw a given image onto the canvas.
      * @param image the image object to be drawn on the canvas
      */
-    public void newImage(Image image) {
+    public void newImage(final Image image) {
         System.out.println("DynaPanel:draw(i): image = " + image);
         panelImage = image;
     }
 
     /**
      * Draw a given image onto the panel and change the frame title.
-     * @param image the image object to be drawn on the canvas
-     * @param title the text to use as the frame title
+     * @param imp ImgProvider object containing the image
      */
-    public void draw(ImgProvider imp) {
+    public void draw(final ImgProvider imp) {
         newImage(imp.getImage());
     }
-  
+
 
     /**
      * Wait for a specified number of milliseconds before finishing.
      * This provides an easy way to specify a small delay which can be
      * used when producing animations.
-     * @param  milliseconds  the number 
+     * @param  milliseconds  the number
      */
-    public void wait(int milliseconds) {
+    public void wait(final int milliseconds) {
         try {
             Thread.sleep(milliseconds);
-        } 
-        catch (Exception e) {
+
+        } catch (Exception e) {
             // ignoring exception at the moment
         }
     }
 
     /**
      * Dynamic (re-)paint.
+     * @param g Grahpic where repaint the image
      */
-    public void paint(Graphics g) {
+    public void paint(final Graphics g) {
         g.drawImage(panelImage, 0, 0, this);
     }
 }

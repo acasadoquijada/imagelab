@@ -1,8 +1,9 @@
 package imagelab;
-import imagelab.*;
-import java.awt.*;
-import java.awt.image.*;
-/** 
+import java.awt.Image;
+import java.awt.Panel;
+import java.awt.Graphics;
+
+/**
  * Used by the ImageLab package to display an image.
  * @author Aaron Gordon
  * @author Jody Paul
@@ -11,19 +12,23 @@ import java.awt.image.*;
 public class DisPanel extends Panel implements ILPanel {
     /** Serialization version. */
     private static final long serialVersionUID = 11L;
-    
+
     /** This panel's image. */
-    Image img;
-    
+    private Image img;
+
     /**
      * Constructor that takes an Image object to display.
      * @param im the Image object
      */
-    public DisPanel(Image im) {
+    public DisPanel(final Image im) {
         img = im;
     }
-    
-    public void paint(Graphics g) {
+
+    /**
+     * Draw img in the Graphics object received as argument.
+     * @param g the Graphics object
+     */
+    public void paint(final Graphics g) {
         g.drawImage(img, 0, 0, this);
     }
 
@@ -31,7 +36,7 @@ public class DisPanel extends Panel implements ILPanel {
      * Change the Image associated with this Panel.
      * @param im the new Image object
      */
-    public void newImage(Image im) {
+    public void newImage(final Image im) {
         img = im;
-    }   
+    }
 }
